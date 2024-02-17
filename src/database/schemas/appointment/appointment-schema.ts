@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose"
-import {APPOINTMENT_SCHEMA_ID, DOCTOR_SCHEMA_ID} from "../names";
+import {APPOINTMENT_SCHEMA_ID} from "../names";
 
 export interface IAppointment {
     timecellid: string,
