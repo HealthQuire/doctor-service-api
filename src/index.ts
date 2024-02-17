@@ -6,7 +6,11 @@ import * as dotenv from "dotenv"
 dotenv.config()
 
 // init mongo
-mongoose.connect(process.env.mongoURI)
+mongoose.connect(process.env.mongoURI).then(() => {
+    console.log("Mongoose is connected!")
+}).catch((err) => {
+    console.error(err)
+})
 
 // init express
 app.listen(process.env.PORT, () => {
