@@ -1,9 +1,9 @@
-import { Schema, model } from "mongoose"
-import {APPOINTMENT_SCHEMA_ID} from "../names";
+import { Schema, model } from 'mongoose';
+import { APPOINTMENT_SCHEMA_ID } from '../names';
 
 export interface IAppointment {
-    timecellid: string,
-    description?: string,
+    timecellid: string;
+    description?: string;
 }
 
 const AppointmentSchema = new Schema({
@@ -14,10 +14,10 @@ const AppointmentSchema = new Schema({
     },
     description: {
         type: String,
-        required: false,
+        required: false
     }
-})
+});
 
-const Appointment = model<IAppointment>(APPOINTMENT_SCHEMA_ID, AppointmentSchema)
+const Appointment = model<IAppointment>(APPOINTMENT_SCHEMA_ID, AppointmentSchema);
 
-export default Appointment
+export default Appointment;

@@ -1,11 +1,11 @@
-import { Schema, model } from "mongoose"
-import {TIMECELL_SCHEMA_ID} from "../names";
+import { Schema, model } from 'mongoose';
+import { TIMECELL_SCHEMA_ID } from '../names';
 
 export interface ITimeCell {
-    doctorid: string,
-    customerid: string,
-    comment?: string,
-    datetime: Date
+    doctorid: string;
+    customerid: string;
+    comment?: string;
+    datetime: Date;
 }
 
 const TimeCellSchema = new Schema({
@@ -21,14 +21,14 @@ const TimeCellSchema = new Schema({
     },
     comment: {
         type: String,
-        required: false,
+        required: false
     },
     datetime: {
         type: false,
-        required: true,
+        required: true
     }
-})
+});
 
-const TimeCell = model<ITimeCell>(TIMECELL_SCHEMA_ID, TimeCellSchema)
+const TimeCell = model<ITimeCell>(TIMECELL_SCHEMA_ID, TimeCellSchema);
 
-export default TimeCell
+export default TimeCell;

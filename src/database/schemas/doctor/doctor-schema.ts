@@ -1,16 +1,16 @@
-import { Schema, model } from "mongoose"
-import {DOCTOR_SCHEMA_ID} from "../names";
+import { Schema, model } from 'mongoose';
+import { DOCTOR_SCHEMA_ID } from '../names';
 
 export interface IDoctor {
-    userid: string,
-    medcentreid: string,
-    firstname: string,
-    lastname: string,
-    fathername?: string,
-    age: number,
-    year_started: number,
-    medservicesids: Array<string>,
-    description?: string
+    userid: string;
+    medcentreid: string;
+    firstname: string;
+    lastname: string;
+    fathername?: string;
+    age: number;
+    year_started: number;
+    medservicesids: Array<string>;
+    description?: string;
 }
 
 const DoctorSchema = new Schema({
@@ -21,15 +21,15 @@ const DoctorSchema = new Schema({
     },
     medcentreid: {
         type: String,
-        required: true,
+        required: true
     },
     firstname: {
         type: String,
-        required: true,
+        required: true
     },
     lastname: {
         type: String,
-        required: true,
+        required: true
     },
     fathername: {
         type: String,
@@ -37,22 +37,22 @@ const DoctorSchema = new Schema({
     },
     age: {
         type: Number,
-        required: true,
+        required: true
     },
     year_started: {
         type: Number,
-        required: true,
+        required: true
     },
     medservicesids: {
         type: [Number],
-        required: true,
+        required: true
     },
     description: {
         type: String,
-        required: false,
+        required: false
     }
-})
+});
 
-const Doctor = model<IDoctor>(DOCTOR_SCHEMA_ID, DoctorSchema)
+const Doctor = model<IDoctor>(DOCTOR_SCHEMA_ID, DoctorSchema);
 
-export default Doctor
+export default Doctor;

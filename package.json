@@ -38,9 +38,13 @@
     "@types/node": "^20.1.5",
     "@types/passport": "^1.0.12",
     "@types/passport-local": "^1.0.35",
+    "eslint": "^8.56.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.29.1",
     "i": "^0.3.7",
-    "nodemon": "^2.0.22",
+    "nodemon": "^3.0.3",
     "npm": "^9.6.6",
+    "prettier": "^3.2.5",
     "typescript": "^5.0.4"
   }
 }
