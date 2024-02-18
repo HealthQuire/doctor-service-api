@@ -21,6 +21,13 @@
     ],
     "one-var": [
       "off"
+    ],
+    "indent": [
+      "error", 4
+    ],
+    "no-shadow": "off",
+    "@typescript-eslint/no-shadow": [
+      "error"
     ]
   }
 }

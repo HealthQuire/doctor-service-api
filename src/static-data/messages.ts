@@ -1,8 +1,13 @@
-enum Messages {
-    registerUsernameError= "Пользователь с таким именем существует.",
-    registerEmailError = "Пользователь с такой почтой существует.",
-    loginUsernameError = "Пользователь не найден.",
-    logiPasswordError = "Неверный пароль."
-}
+const Messages = {};
 
-export default Messages
+export const Validation = {
+    Doctor: {
+        fieldEmpty: 'Поле не может быть пустым',
+        invalidEmail: 'Неверный формат почты',
+        invalidPhone: 'Неверный формат телефона',
+        maxLengthLimited: (n: Number) => `Превышена максимальная длина: ${n} символов`,
+        minLengthLimited: (n: Number) => `Превышена минимальная длина: ${n} символов`
+    }
+};
+
+export default Messages;
