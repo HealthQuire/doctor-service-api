@@ -7,7 +7,7 @@ dotenv.config();
 
 // init mongo
 mongoose
-    .connect(process.env.mongoURI)
+    .connect(process.env.MONGO_URI as string)
     .then(() => {
         console.log('Mongoose is connected!');
     })
