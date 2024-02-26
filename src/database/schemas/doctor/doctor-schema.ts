@@ -37,11 +37,15 @@ const DoctorSchema = new Schema({
     },
     age: {
         type: Number,
-        required: true
+        required: true,
+        min: 18,
+        max: 120
     },
     year_started: {
         type: Number,
-        required: true
+        required: true,
+        min: 1976,
+        max: 2025
     },
     medservicesids: {
         type: [Number],
@@ -49,7 +53,8 @@ const DoctorSchema = new Schema({
     },
     description: {
         type: String,
-        required: false
+        required: false,
+        maxLength: 2000
     }
 });
 

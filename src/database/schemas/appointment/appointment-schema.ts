@@ -14,7 +14,8 @@ const AppointmentSchema = new Schema({
     },
     description: {
         type: String,
-        required: false
+        required: false,
+        maxLength: 10000
     }
 });
 

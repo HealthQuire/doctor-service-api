@@ -21,7 +21,8 @@ const TimeCellSchema = new Schema({
     },
     comment: {
         type: String,
-        required: false
+        required: false,
+        maxLength: 1000
     },
     datetime: {
         type: false,
