@@ -1,3 +1,9 @@
+/*
+ * Timecell Controller
+ */
+
+// TODO: Add validation through other services
+
 import guard from '../../middleware/auth/check-token';
 import { Request, Response } from 'express';
 import router from './doctor-controller';
@@ -63,3 +69,5 @@ router.delete('/', guard(0), async (req: Request, res: Response) => {
         res.sendStatus(500).send(error);
     }
 });
+
+export default router;

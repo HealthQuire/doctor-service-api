@@ -1,6 +1,8 @@
 import * as bodyParser from 'body-parser';
 import express from 'express';
 import doctorController from './endpoint/doctor-controller';
+import appointmentController from './endpoint/appointment-controller';
+import timecellController from './endpoint/timecell-controller';
 import cors from 'cors';
 
 class App {
@@ -26,6 +28,8 @@ class App {
         this.express.use(cors());
 
         this.express.use('/doctor', doctorController);
+        this.express.use('/timecell', timecellController);
+        this.express.use('/appointment', appointmentController);
     }
 }
 
