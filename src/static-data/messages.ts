@@ -1,4 +1,6 @@
-const Messages = {};
+const Messages = {
+    NOT_FOUND: 'Not found'
+};
 
 export const Validation = {
     Doctor: {
