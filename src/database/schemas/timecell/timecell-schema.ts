@@ -9,7 +9,7 @@ export interface ITimeCell {
 }
 
 const TimeCellSchema = new Schema({
-    userid: {
+    doctorid: {
         type: String,
         required: true,
         unique: true

@@ -8,6 +8,7 @@ import { Router, Request, Response } from 'express';
 import Appointment from '../../database/schemas/appointment/appointment-schema';
 import guard from '../../middleware/auth/check-token';
 import Messages from '../../static-data/messages';
+import TimeCell from '../../database/schemas/timecell/timecell-schema';
 
 const router = Router();
 
@@ -36,6 +37,27 @@ router.get('/:id', guard(0), async (req: Request, res: Response) => {
 router.post('/', guard(0), async (req: Request, res: Response) => {
     try {
         const appointment = new Appointment(req.body);
+        await appointment.save();
+        res.json(appointment);
+    } catch (error) {
+        res.status(500).send(error);
+    }
+});
+
+router.post('/publish', guard(0), async (req: Request, res: Response) => {
+    try {
+        const description = req.body.description;
+        const timecell = new TimeCell({
+            doctorid: req.body.doctorid,
+            customerid: req.body.customerid,
+            datetime: req.body.datetime,
+            comment: req.body.comment
+        });
+        await timecell.save();
+        const appointment = new Appointment({
+            description: description,
+            timecellid: timecell.id
+        });
         await appointment.save();
         res.json(appointment);
     } catch (error) {
