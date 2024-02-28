@@ -3,16 +3,23 @@ import amqplib from 'amqplib';
 
 dotenv.config();
 
-const connect = async () => {
+const AMQPConnect = async () => {
     try {
-        const amqpServer = `amqp://localhost:${process.env.RABBITMQ_PORT as string}`;
+        const amqpServer = `amqp://localhost:${process.env.RABBITMQ_PORT}`;
         const connection = await amqplib.connect(amqpServer);
         const channel = await connection.createChannel();
-
         await channel.assertQueue('order');
+        return {
+            channel: channel,
+            connection: connection
+        };
     } catch (error) {
-        console.log(error);
+        console.error(error);
+        return {
+            channel: null,
+            connection: null
+        };
     }
 };
 
-export default connect;
+export default AMQPConnect;

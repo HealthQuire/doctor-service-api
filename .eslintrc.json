@@ -6,8 +6,7 @@
   },
   "rules": {
     "brace-style": [
-      "error",
-      "stroustrup"
+      "off"
     ],
     "comma-dangle": [
       "error",
@@ -25,6 +24,7 @@
     "indent": [
       "error", 4
     ],
+    "brace"
     "no-shadow": "off",
     "@typescript-eslint/no-shadow": [
       "error"
