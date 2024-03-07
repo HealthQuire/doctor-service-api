@@ -9,6 +9,11 @@ import Appointment from '../../database/schemas/appointment/appointment-schema';
 import guard from '../../middleware/auth/check-token';
 import Messages from '../../static-data/messages';
 import TimeCell from '../../database/schemas/timecell/timecell-schema';
+import {
+    APPOINTMENT_SCHEMA_ID,
+    DOCTOR_SCHEMA_ID,
+    TIMECELL_SCHEMA_ID
+} from '../../database/schemas/names';
 
 const router = Router();
 
@@ -23,7 +28,12 @@ router.get('/', guard(0), async (req: Request, res: Response) => {
 
 router.get('/:id', guard(0), async (req: Request, res: Response) => {
     try {
-        const appointment = await Appointment.findById(req.params.id).lean().exec();
+        const appointment = await Appointment.findById(req.params.id)
+            .populate(TIMECELL_SCHEMA_ID)
+            .populate(DOCTOR_SCHEMA_ID)
+            .populate(APPOINTMENT_SCHEMA_ID)
+            .lean()
+            .exec();
         if (!appointment) {
             res.status(404).send(Messages.NOT_FOUND);
         } else {

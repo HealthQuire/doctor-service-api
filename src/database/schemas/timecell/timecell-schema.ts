@@ -1,24 +1,24 @@
 import mongoose, { Schema, model } from 'mongoose';
-import { TIMECELL_SCHEMA_ID } from '../names';
+import { CUSTOMER_SCHEMA_ID, DOCTOR_SCHEMA_ID, TIMECELL_SCHEMA_ID } from '../names';
+import { IDoctor } from '../doctor/doctor-schema';
+import { ICustomer } from '../customer/customer-schema';
 
 export interface ITimeCell {
     _id: mongoose.Types.ObjectId;
-    doctorid: string;
-    customerid: string;
+    doctor: IDoctor;
+    customer: ICustomer;
     comment?: string;
     datetime: Date;
 }
 
 const TimeCellSchema = new Schema({
-    doctorid: {
-        type: String,
-        required: true,
-        unique: true
+    doctor: {
+        type: Schema.Types.ObjectId,
+        ref: DOCTOR_SCHEMA_ID
     },
-    customerid: {
-        type: String,
-        required: true,
-        unique: true
+    customer: {
+        type: Schema.Types.ObjectId,
+        ref: CUSTOMER_SCHEMA_ID
     },
     comment: {
         type: String,
