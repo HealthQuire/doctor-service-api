@@ -9,10 +9,15 @@ import { Request, Response } from 'express';
 import router from './doctor-controller';
 import TimeCell from '../../database/schemas/timecell/timecell-schema';
 import Messages from '../../static-data/messages';
+import { CUSTOMER_SCHEMA_ID, DOCTOR_SCHEMA_ID } from '../../database/schemas/names';
 
 router.get('/', guard(0), async (req: Request, res: Response) => {
     try {
-        const timecells = await TimeCell.find().lean().exec();
+        const timecells = await TimeCell.find()
+            .populate(DOCTOR_SCHEMA_ID)
+            .populate(CUSTOMER_SCHEMA_ID)
+            .lean()
+            .exec();
         res.json(timecells);
     } catch (error) {
         res.status(500).send(error);
@@ -21,7 +26,11 @@ router.get('/', guard(0), async (req: Request, res: Response) => {
 
 router.get('/:id', guard(0), async (req: Request, res: Response) => {
     try {
-        const timecell = await TimeCell.findById(req.params.id).lean().exec();
+        const timecell = await TimeCell.findById(req.params.id)
+            .populate(DOCTOR_SCHEMA_ID)
+            .populate(CUSTOMER_SCHEMA_ID)
+            .lean()
+            .exec();
         if (!timecell) {
             res.status(404).send(Messages.NOT_FOUND);
         } else {

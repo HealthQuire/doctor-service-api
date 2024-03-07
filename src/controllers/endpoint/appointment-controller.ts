@@ -19,7 +19,12 @@ const router = Router();
 
 router.get('/', guard(0), async (req: Request, res: Response) => {
     try {
-        const appointments = await Appointment.find().lean().exec();
+        const appointments = await Appointment.find()
+            .populate(TIMECELL_SCHEMA_ID)
+            .populate(DOCTOR_SCHEMA_ID)
+            .populate(APPOINTMENT_SCHEMA_ID)
+            .lean()
+            .exec();
         res.json(appointments);
     } catch (error) {
         res.sendStatus(500).send(error);
