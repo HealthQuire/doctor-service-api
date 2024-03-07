@@ -1,7 +1,8 @@
-import { Schema, model } from 'mongoose';
+import mongoose, { Schema, model } from 'mongoose';
 import { DOCTOR_SCHEMA_ID } from '../names';
 
 export interface IDoctor {
+    _id: mongoose.Types.ObjectId;
     userid: string;
     medcentreid: string;
     firstname: string;

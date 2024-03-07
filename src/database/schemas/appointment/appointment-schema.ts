@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose';
+import mongoose, { Schema, model } from 'mongoose';
 import {
     APPOINTMENT_SCHEMA_ID,
     CUSTOMER_SCHEMA_ID,
@@ -10,6 +10,7 @@ import { IDoctor } from '../doctor/doctor-schema';
 import { ICustomer } from '../customer/customer-schema';
 
 export interface IAppointment {
+    _id: mongoose.Types.ObjectId;
     timecell: ITimeCell;
     doctor: IDoctor;
     customer: ICustomer;

@@ -1,7 +1,8 @@
-import { Schema, model } from 'mongoose';
+import mongoose, { Schema, model } from 'mongoose';
 import { TIMECELL_SCHEMA_ID } from '../names';
 
 export interface ITimeCell {
+    _id: mongoose.Types.ObjectId;
     doctorid: string;
     customerid: string;
     comment?: string;

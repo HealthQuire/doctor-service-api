@@ -1,7 +1,8 @@
-import { Schema, model } from 'mongoose';
+import mongoose, { Schema, model } from 'mongoose';
 import { CUSTOMER_SCHEMA_ID } from '../names';
 
 export interface ICustomer {
+    _id: mongoose.Types.ObjectId;
     userid: string;
     birthdate: Date;
     gender: boolean;
