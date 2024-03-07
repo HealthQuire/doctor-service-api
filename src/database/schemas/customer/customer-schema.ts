@@ -4,7 +4,7 @@ import { CUSTOMER_SCHEMA_ID } from '../names';
 export interface ICustomer {
     _id: mongoose.Types.ObjectId;
     userid: string;
-    birthdate: Date;
+    birthdate: string;
     gender: boolean;
     comment?: string;
 }

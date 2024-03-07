@@ -29,7 +29,7 @@ export interface IDoctorCreateData {
     email: string;
     password: string;
     phone?: string;
-    avatarURL: string;
+    avatarURL?: string;
     medcentreid: string;
     firstname: string;
     lastname: string;
