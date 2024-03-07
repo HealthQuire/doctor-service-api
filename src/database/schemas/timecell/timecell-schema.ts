@@ -25,7 +25,7 @@ const TimeCellSchema = new Schema({
         maxLength: 1000
     },
     datetime: {
-        type: false,
+        type: String,
         required: true
     }
 });

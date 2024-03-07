@@ -1,12 +1,18 @@
 import { Schema, model } from 'mongoose';
-import { APPOINTMENT_SCHEMA_ID, DOCTOR_SCHEMA_ID, TIMECELL_SCHEMA_ID } from '../names';
+import {
+    APPOINTMENT_SCHEMA_ID,
+    CUSTOMER_SCHEMA_ID,
+    DOCTOR_SCHEMA_ID,
+    TIMECELL_SCHEMA_ID
+} from '../names';
 import { ITimeCell } from '../timecell/timecell-schema';
 import { IDoctor } from '../doctor/doctor-schema';
+import { ICustomer } from '../customer/customer-schema';
 
 export interface IAppointment {
     timecell: ITimeCell;
     doctor: IDoctor;
-    customer: unknown;
+    customer: ICustomer;
     title: string;
     content: string;
     status: number;
@@ -22,8 +28,8 @@ const AppointmentSchema = new Schema({
         ref: DOCTOR_SCHEMA_ID
     },
     customer: {
-        type: String,
-        required: true
+        type: Schema.Types.ObjectId,
+        ref: CUSTOMER_SCHEMA_ID
     },
     title: {
         type: String,
