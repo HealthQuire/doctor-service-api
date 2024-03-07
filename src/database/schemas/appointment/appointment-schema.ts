@@ -1,18 +1,36 @@
 import { Schema, model } from 'mongoose';
-import { APPOINTMENT_SCHEMA_ID } from '../names';
+import { APPOINTMENT_SCHEMA_ID, DOCTOR_SCHEMA_ID, TIMECELL_SCHEMA_ID } from '../names';
+import { ITimeCell } from '../timecell/timecell-schema';
+import { IDoctor } from '../doctor/doctor-schema';
 
 export interface IAppointment {
-    timecellid: string;
-    description?: string;
+    timecell: ITimeCell;
+    doctor: IDoctor;
+    customer: unknown;
+    title: string;
+    content: string;
+    status: number;
 }
 
 const AppointmentSchema = new Schema({
-    timecellid: {
-        type: String,
-        required: true,
-        unique: true
+    timecell: {
+        type: Schema.Types.ObjectId,
+        ref: TIMECELL_SCHEMA_ID
     },
-    description: {
+    doctor: {
+        type: Schema.Types.ObjectId,
+        ref: DOCTOR_SCHEMA_ID
+    },
+    customer: {
+        type: String,
+        required: true
+    },
+    title: {
+        type: String,
+        required: false,
+        maxLength: 1000
+    },
+    content: {
         type: String,
         required: false,
         maxLength: 10000

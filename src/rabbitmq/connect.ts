@@ -3,7 +3,12 @@ import amqplib from 'amqplib';
 
 dotenv.config();
 
-const AMQPConnect = async () => {
+interface IAmpqlibData {
+    channel: amqplib.Channel;
+    connection: amqplib.Connection;
+}
+
+const AMQPConnect = async (): Promise<IAmpqlibData> => {
     try {
         const amqpServer = `amqp://localhost:${process.env.RABBITMQ_PORT}`;
         const connection = await amqplib.connect(amqpServer);
