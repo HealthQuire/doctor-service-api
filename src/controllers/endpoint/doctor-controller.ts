@@ -10,6 +10,8 @@ import guard from '../../middleware/auth/check-token';
 import Messages from '../../static-data/messages';
 import axios from 'axios';
 import mongoose from 'mongoose';
+import createUser from '../utils/create-user';
+import getUserById from '../utils/get-user-by-id';
 
 const router = Router();
 
@@ -55,7 +57,11 @@ router.get('/:id', guard(0), async (req: Request, res: Response) => {
         if (!doctor) {
             res.status(404).send(Messages.NOT_FOUND);
         } else {
-            res.json(doctor);
+            const user = await getUserById(doctor.userid);
+            res.json({
+                ...user,
+                ...doctor
+            });
         }
     } catch (error) {
         res.sendStatus(500).send(error);
@@ -64,21 +70,17 @@ router.get('/:id', guard(0), async (req: Request, res: Response) => {
 
 router.post('/create', guard(0), async (req: Request, res: Response) => {
     try {
-        const TEMP_USER_SERVICE_URL = 'http://localhost:3000/user-service';
-        const userServiceHook = await axios.post(TEMP_USER_SERVICE_URL + 'user', {
+        const userData = await createUser({
             email: req.body.email,
             password: req.body.password,
+            role: 2,
             phone: req.body.phone,
             avatarURL: req.body.avatarURL
         });
 
-        if (userServiceHook.status !== 200) {
-            throw new Error('User service error');
-        }
-
         const doctorData: IDoctor = {
             _id: new mongoose.Types.ObjectId(),
-            userid: userServiceHook.data.id,
+            userid: userData._id,
             medcentreid: req.body.medcentreid,
             firstname: req.body.firstname,
             lastname: req.body.lastname,

@@ -5,6 +5,8 @@ import Messages from '../../static-data/messages';
 import Doctor, { IDoctor } from '../../database/schemas/doctor/doctor-schema';
 import axios from 'axios';
 import mongoose from 'mongoose';
+import createUser from '../utils/create-user';
+import getUserById from '../utils/get-user-by-id';
 
 const router = Router();
 
@@ -35,7 +37,11 @@ router.get('/:id', guard(0), async (req: Request, res: Response) => {
         if (!customer) {
             res.status(404).send(Messages.NOT_FOUND);
         } else {
-            res.json(customer);
+            const user = await getUserById(customer.userid);
+            res.json({
+                ...user,
+                ...customer
+            });
         }
     } catch (error) {
         res.sendStatus(500).send(error);
@@ -44,21 +50,17 @@ router.get('/:id', guard(0), async (req: Request, res: Response) => {
 
 router.post('/create', guard(0), async (req: Request, res: Response) => {
     try {
-        const TEMP_USER_SERVICE_URL = 'http://localhost:3000/user-service';
-        const userServiceHook = await axios.post(TEMP_USER_SERVICE_URL + 'user', {
+        const userData = await createUser({
             email: req.body.email,
             password: req.body.password,
+            role: 1,
             phone: req.body.phone,
             avatarURL: req.body.avatarURL
         });
 
-        if (userServiceHook.status !== 200) {
-            throw new Error('User service error');
-        }
-
         const customerData: ICustomer = {
             _id: new mongoose.Types.ObjectId(),
-            userid: userServiceHook.data.id,
+            userid: userData._id,
             birthdate: req.body.birthdate,
             gender: req.body.gender,
             comment: req.body.comment
