@@ -9,15 +9,17 @@ export interface IUserData {
     role: number;
     phone?: string;
     avatarURL?: string;
+    status: string;
 }
 
 const createUser = async (userData: IUserData) => {
-    const userServiceHook = await axios.post(process.env.USER_SERVICE_URL + 'user/', {
+    const userServiceHook = await axios.post(process.env.USER_SERVICE_URL + 'users/', {
         email: userData.email,
         password: userData.password,
         role: userData.role,
         phone: userData.phone,
-        avatarURL: userData.avatarURL
+        avatarURL: userData.avatarURL,
+        status: 'active'
     });
 
     if (userServiceHook.status !== 200) {

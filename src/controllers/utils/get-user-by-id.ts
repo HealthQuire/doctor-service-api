@@ -4,7 +4,7 @@ import axios from 'axios';
 dotenv.config();
 
 const getUserById = async (id: string) => {
-    const userServiceHook = await axios.get(process.env.USER_SERVICE_URL + 'user/' + id);
+    const userServiceHook = await axios.get(process.env.USER_SERVICE_URL + 'users/' + id);
     if (userServiceHook.status !== 200) {
         throw new Error('User service error');
     }
