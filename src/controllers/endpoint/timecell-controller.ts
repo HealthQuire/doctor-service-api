@@ -53,6 +53,28 @@ router.get('/today/:doctorid', guard(0), async (req: Request, res: Response) => 
     }
 });
 
+router.post('/currentweek/:doctorid', guard(0), async (req: Request, res: Response) => {
+    const nextSevenDays: Array<Date> = new Array(7).fill(null).map((_, i) => {
+        const date = new Date();
+        date.setDate(date.getDate() + i);
+        return date;
+    });
+
+    try {
+        const timecells = await TimeCell.find({
+            doctorid: req.params.doctorid,
+            date: { $in: nextSevenDays }
+        })
+            .populate(DOCTOR_SCHEMA_ID)
+            .populate(CUSTOMER_SCHEMA_ID)
+            .lean()
+            .exec();
+        res.json(timecells);
+    } catch (error) {
+        res.status(500).send(error);
+    }
+});
+
 router.post('/', guard(0), async (req: Request, res: Response) => {
     try {
         const timecell = new TimeCell(req.body);
