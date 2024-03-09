@@ -74,7 +74,7 @@ router.post('/create', guard(0), async (req: Request, res: Response) => {
             password: req.body.password,
             role: 2,
             phone: req.body.phone,
-            avatarURL: req.body.avatarURL,
+            avatarUrl: req.body.avatarURL,
             status: 'active'
         });
 
@@ -94,6 +94,7 @@ router.post('/create', guard(0), async (req: Request, res: Response) => {
         await doctor.save();
         res.json(doctor);
     } catch (error) {
+        console.error(error);
         res.status(500).send(error);
     }
 });

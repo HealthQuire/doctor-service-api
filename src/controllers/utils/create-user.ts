@@ -8,7 +8,7 @@ export interface IUserData {
     password: string;
     role: number;
     phone?: string;
-    avatarURL?: string;
+    avatarUrl?: string;
     status: string;
 }
 
@@ -18,7 +18,7 @@ const createUser = async (userData: IUserData) => {
         password: userData.password,
         role: userData.role,
         phone: userData.phone,
-        avatarURL: userData.avatarURL,
+        avatarUrl: userData.avatarUrl,
         status: 'active'
     });
     console.log(userServiceHook);
