@@ -80,7 +80,7 @@ router.post('/create', guard(0), async (req: Request, res: Response) => {
 
         const doctorData: IDoctor = {
             _id: new mongoose.Types.ObjectId(),
-            userid: userData._id,
+            userid: userData.id,
             medcentreid: req.body.medcentreid,
             firstname: req.body.firstname,
             lastname: req.body.lastname,

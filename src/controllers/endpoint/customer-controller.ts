@@ -64,7 +64,7 @@ router.post('/create', guard(0), async (req: Request, res: Response) => {
 
         const customerData: ICustomer = {
             _id: new mongoose.Types.ObjectId(),
-            userid: userData._id,
+            userid: userData.id,
             firstname: req.body.firstname,
             lastname: req.body.lastname,
             fathername: req.body.fathername,
