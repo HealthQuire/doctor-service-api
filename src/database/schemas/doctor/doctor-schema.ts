@@ -49,7 +49,7 @@ const DoctorSchema = new Schema({
         max: 2025
     },
     medservicesids: {
-        type: [Number],
+        type: [String],
         required: true
     },
     description: {
