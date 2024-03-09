@@ -51,7 +51,13 @@ router.get('/:id', guard(0), async (req: Request, res: Response) => {
 
 router.post('/', guard(0), async (req: Request, res: Response) => {
     try {
-        const appointment = new Appointment(req.body);
+        const timecell = await TimeCell.findById(req.body.id);
+        const appointment = new Appointment({
+            timecell: timecell,
+            title: req.body.title,
+            content: req.body.content,
+            status: req.body.status
+        });
         await appointment.save();
         res.json(appointment);
     } catch (error) {
