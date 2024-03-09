@@ -6,6 +6,6 @@ COPY . .
 
 RUN npm install
 
-ENTRYPOINT "npm run dev"
+ENTRYPOINT ["npm run build", "npm run start"]
 
 EXPOSE 4003
