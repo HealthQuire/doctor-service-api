@@ -4,7 +4,10 @@ import { CUSTOMER_SCHEMA_ID } from '../names';
 export interface ICustomer {
     _id: mongoose.Types.ObjectId;
     userid: string;
-    birthdate: string;
+    firstname: string;
+    lastname: string;
+    fathername?: string;
+    birthdate: Date;
     gender: boolean;
     comment?: string;
 }
@@ -12,10 +15,23 @@ export interface ICustomer {
 const CustomerSchema = new Schema({
     userid: {
         type: String,
+        required: true,
+        unique: true
+    },
+    firstname: {
+        type: String,
         required: true
     },
-    birthdate: {
+    lastname: {
         type: String,
+        required: true
+    },
+    fathername: {
+        type: String,
+        required: false
+    },
+    birthdate: {
+        type: Date,
         required: true
     },
     gender: {

@@ -14,6 +14,9 @@ export interface ICustomerCreateData {
     email: string;
     password: string;
     phone?: string;
+    firstname: string;
+    lastname: string;
+    fathername?: string;
     avatarURL?: string;
     birthdate: string;
     gender: boolean;
@@ -61,6 +64,9 @@ router.post('/create', guard(0), async (req: Request, res: Response) => {
         const customerData: ICustomer = {
             _id: new mongoose.Types.ObjectId(),
             userid: userData._id,
+            firstname: req.body.firstname,
+            lastname: req.body.lastname,
+            fathername: req.body.fathername,
             birthdate: req.body.birthdate,
             gender: req.body.gender,
             comment: req.body.comment

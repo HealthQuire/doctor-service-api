@@ -2,14 +2,13 @@
  * Timecell Controller
  */
 
-// TODO: Add validation through other services
-
 import guard from '../../middleware/auth/check-token';
-import { Request, Response } from 'express';
-import router from './doctor-controller';
+import { Request, Response, Router } from 'express';
 import TimeCell from '../../database/schemas/timecell/timecell-schema';
 import Messages from '../../static-data/messages';
 import { CUSTOMER_SCHEMA_ID, DOCTOR_SCHEMA_ID } from '../../database/schemas/names';
+
+const router = Router();
 
 router.get('/', guard(0), async (req: Request, res: Response) => {
     try {
@@ -36,6 +35,19 @@ router.get('/:id', guard(0), async (req: Request, res: Response) => {
         } else {
             res.json(timecell);
         }
+    } catch (error) {
+        res.status(500).send(error);
+    }
+});
+
+router.get('/today/:doctorid', guard(0), async (req: Request, res: Response) => {
+    try {
+        const timecells = await TimeCell.find({ doctorid: req.params.doctorid, date: new Date() })
+            .populate(DOCTOR_SCHEMA_ID)
+            .populate(CUSTOMER_SCHEMA_ID)
+            .lean()
+            .exec();
+        res.json(timecells);
     } catch (error) {
         res.status(500).send(error);
     }

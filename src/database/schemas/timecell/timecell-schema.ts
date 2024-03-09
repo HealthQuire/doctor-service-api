@@ -8,26 +8,41 @@ export interface ITimeCell {
     doctor: IDoctor;
     customer: ICustomer;
     comment?: string;
-    datetime: Date;
+    date: Date;
+    time: string;
 }
 
 const TimeCellSchema = new Schema({
     doctor: {
         type: Schema.Types.ObjectId,
-        ref: DOCTOR_SCHEMA_ID
+        ref: DOCTOR_SCHEMA_ID,
+        required: true
     },
     customer: {
         type: Schema.Types.ObjectId,
-        ref: CUSTOMER_SCHEMA_ID
+        ref: CUSTOMER_SCHEMA_ID,
+        required: true
     },
     comment: {
         type: String,
         required: false,
         maxLength: 1000
     },
-    datetime: {
-        type: String,
+    date: {
+        type: Date,
         required: true
+    },
+    time: {
+        type: String,
+        validate: {
+            validator: function (v) {
+                if (!v) {
+                    return true;
+                }
+                return /([01]?[0-9]|2[0-3]):[0-5][0-9]/.test(v);
+            },
+            message: (props) => `${props.value} is not valid time!`
+        }
     }
 });
 

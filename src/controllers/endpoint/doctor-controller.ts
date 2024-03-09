@@ -8,7 +8,6 @@ import { Router, Request, Response } from 'express';
 import Doctor, { IDoctor } from '../../database/schemas/doctor/doctor-schema';
 import guard from '../../middleware/auth/check-token';
 import Messages from '../../static-data/messages';
-import axios from 'axios';
 import mongoose from 'mongoose';
 import createUser from '../utils/create-user';
 import getUserById from '../utils/get-user-by-id';
