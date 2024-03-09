@@ -58,7 +58,7 @@ router.post('/create', guard(0), async (req: Request, res: Response) => {
             password: req.body.password,
             role: 1,
             phone: req.body.phone,
-            avatarUrl: req.body.avatarURL,
+            avatarUrl: req.body.avatarUrl,
             status: 'active'
         });
 
