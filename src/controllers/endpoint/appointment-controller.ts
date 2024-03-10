@@ -42,7 +42,7 @@ router.get('/:id', guard(0), async (req: Request, res: Response) => {
     }
 });
 
-router.get('/doctor/:doctorid', guard(0), async (req: Request, res: Response) => {
+router.get('/doctor/:doctorid/:searchString', guard(0), async (req: Request, res: Response) => {
     try {
         const appointment = await Appointment.find({}).populate(TIMECELL_SCHEMA_ID).lean().exec();
         if (!appointment) {
@@ -51,7 +51,9 @@ router.get('/doctor/:doctorid', guard(0), async (req: Request, res: Response) =>
             console.log(appointment);
             res.json(
                 appointment.filter(
-                    (a: IAppointment) => String(a.timecell.doctor._id) === req.params.doctorid
+                    (a: IAppointment) =>
+                        String(a.timecell.doctor._id) === req.params.doctorid &&
+                        (a.title.includes(req.params.searchString) || !req.params.searchString)
                 )
             );
         }
