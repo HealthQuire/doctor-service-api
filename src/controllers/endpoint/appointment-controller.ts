@@ -62,7 +62,7 @@ router.get('/doctor/:doctorid', guard(0), async (req: Request, res: Response) =>
 
 router.post('/', guard(0), async (req: Request, res: Response) => {
     try {
-        const timecell = await TimeCell.findById(req.body.timecellid);
+        const timecell = await TimeCell.findById(req.body.timecell);
         const appointment = new Appointment({
             timecell: timecell,
             title: req.body.title,
