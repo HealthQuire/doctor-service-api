@@ -42,7 +42,7 @@ router.get('/:id', guard(0), async (req: Request, res: Response) => {
 
 router.get('/today/:doctorid', guard(0), async (req: Request, res: Response) => {
     try {
-        const timecells = await TimeCell.find({ doctorid: req.params.doctorid, date: new Date() })
+        const timecells = await TimeCell.find({ doctor: req.params.doctorid, date: new Date() })
             .populate(DOCTOR_SCHEMA_ID)
             .populate(CUSTOMER_SCHEMA_ID)
             .lean()
@@ -62,7 +62,7 @@ router.post('/currentweek/:doctorid', guard(0), async (req: Request, res: Respon
 
     try {
         const timecells = await TimeCell.find({
-            doctorid: req.params.doctorid,
+            doctor: req.params.doctorid,
             date: { $in: nextSevenDays }
         })
             .populate(DOCTOR_SCHEMA_ID)
