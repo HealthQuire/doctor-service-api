@@ -65,6 +65,7 @@ router.get('/:id', guard(0), async (req: Request, res: Response) => {
 
 router.get('/today/:doctorid', guard(0), async (req: Request, res: Response) => {
     const today = new Date();
+    console.log(today);
     today.setSeconds(0);
     today.setHours(0);
     today.setMinutes(0);
