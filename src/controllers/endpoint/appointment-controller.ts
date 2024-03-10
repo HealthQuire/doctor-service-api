@@ -42,7 +42,7 @@ router.get('/:id', guard(0), async (req: Request, res: Response) => {
     }
 });
 
-router.get('/:doctorid', guard(0), async (req: Request, res: Response) => {
+router.get('/doctor/:doctorid', guard(0), async (req: Request, res: Response) => {
     try {
         const appointment = await Appointment.find().populate(TIMECELL_SCHEMA_ID).lean().exec();
         if (!appointment) {
