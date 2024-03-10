@@ -43,7 +43,7 @@ router.get('/:id', guard(0), async (req: Request, res: Response) => {
 
 router.get('/today/:doctorid', guard(0), async (req: Request, res: Response) => {
     try {
-        const timecells = await TimeCell.find({ date: new Date() })
+        const timecells = await TimeCell.find({ date: String(new Date()).split('T')[0] })
             .populate(DOCTOR_SCHEMA_ID)
             .populate(CUSTOMER_SCHEMA_ID)
             .lean()
@@ -56,7 +56,7 @@ router.get('/today/:doctorid', guard(0), async (req: Request, res: Response) => 
     }
 });
 
-router.post('/currentweek/:doctorid', guard(0), async (req: Request, res: Response) => {
+router.get('/currentweek/:doctorid', guard(0), async (req: Request, res: Response) => {
     const nextSevenDays: Array<Date> = new Array(7).fill(null).map((_, i) => {
         const date = new Date();
         date.setDate(date.getDate() + i);
