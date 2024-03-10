@@ -71,7 +71,8 @@ router.get('/today/:doctorid', guard(0), async (req: Request, res: Response) => 
     today.setMinutes(0);
     today.setMilliseconds(0);
     try {
-        const timecells = await TimeCell.find({ date: today })
+        //const timecells = await TimeCell.find({ date: today })
+        const timecells = await TimeCell.find({})
             .populate(DOCTOR_SCHEMA_ID)
             .populate(CUSTOMER_SCHEMA_ID)
             .lean()
