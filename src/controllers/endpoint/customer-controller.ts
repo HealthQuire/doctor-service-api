@@ -72,7 +72,7 @@ router.post('/create', guard(0), async (req: Request, res: Response) => {
             gender: req.body.gender,
             comment: req.body.comment
         };
-        const customer = new Doctor(customerData);
+        const customer = new Customer(customerData);
         await customer.save();
         res.json(customer);
     } catch (error) {
