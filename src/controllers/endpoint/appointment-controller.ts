@@ -48,6 +48,7 @@ router.get('/doctor/:doctorid', guard(0), async (req: Request, res: Response) =>
         if (!appointment) {
             res.status(404).send(Messages.NOT_FOUND);
         } else {
+            console.log(appointment);
             res.json(
                 appointment.filter(
                     (a: IAppointment) => String(a.timecell.doctor._id) === req.params.doctorid
