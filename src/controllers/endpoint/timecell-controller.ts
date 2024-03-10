@@ -42,8 +42,13 @@ router.get('/:id', guard(0), async (req: Request, res: Response) => {
 });
 
 router.get('/today/:doctorid', guard(0), async (req: Request, res: Response) => {
+    const today = new Date();
+    today.setSeconds(0);
+    today.setHours(0);
+    today.setMinutes(0);
+    today.setMilliseconds(0);
     try {
-        const timecells = await TimeCell.find({ date: String(new Date()).split('T')[0] })
+        const timecells = await TimeCell.find({ date: today })
             .populate(DOCTOR_SCHEMA_ID)
             .populate(CUSTOMER_SCHEMA_ID)
             .lean()
@@ -59,6 +64,10 @@ router.get('/today/:doctorid', guard(0), async (req: Request, res: Response) => 
 router.get('/currentweek/:doctorid', guard(0), async (req: Request, res: Response) => {
     const nextSevenDays: Array<Date> = new Array(7).fill(null).map((_, i) => {
         const date = new Date();
+        date.setSeconds(0);
+        date.setHours(0);
+        date.setMinutes(0);
+        date.setMilliseconds(0);
         date.setDate(date.getDate() + i);
         return date;
     });
