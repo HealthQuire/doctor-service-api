@@ -43,14 +43,14 @@ router.get('/:id', guard(0), async (req: Request, res: Response) => {
 
 router.get('/today/:doctorid', guard(0), async (req: Request, res: Response) => {
     try {
-        const doctor = await Doctor.findById(req.params.doctorid);
-
-        const timecells = await TimeCell.find({ doctor: doctor, date: new Date() })
+        const timecells = await TimeCell.find({ date: new Date() })
             .populate(DOCTOR_SCHEMA_ID)
             .populate(CUSTOMER_SCHEMA_ID)
             .lean()
             .exec();
-        res.json(timecells);
+        res.json(
+            timecells.filter((timecell) => String(timecell.doctor._id) === req.params.doctorid)
+        );
     } catch (error) {
         res.status(500).send(error);
     }
@@ -64,17 +64,16 @@ router.post('/currentweek/:doctorid', guard(0), async (req: Request, res: Respon
     });
 
     try {
-        const doctor = await Doctor.findById(req.params.doctorid);
-
         const timecells = await TimeCell.find({
-            doctor: doctor,
             date: { $in: nextSevenDays }
         })
             .populate(DOCTOR_SCHEMA_ID)
             .populate(CUSTOMER_SCHEMA_ID)
             .lean()
             .exec();
-        res.json(timecells);
+        res.json(
+            timecells.filter((timecell) => String(timecell.doctor._id) === req.params.doctorid)
+        );
     } catch (error) {
         res.status(500).send(error);
     }
