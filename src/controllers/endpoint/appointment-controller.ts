@@ -5,10 +5,10 @@
 // TODO: Add validation through other services
 
 import { Router, Request, Response } from 'express';
-import Appointment from '../../database/schemas/appointment/appointment-schema';
+import Appointment, { IAppointment } from '../../database/schemas/appointment/appointment-schema';
 import guard from '../../middleware/auth/check-token';
 import Messages from '../../static-data/messages';
-import TimeCell from '../../database/schemas/timecell/timecell-schema';
+import TimeCell, { ITimeCell } from '../../database/schemas/timecell/timecell-schema';
 import {
     APPOINTMENT_SCHEMA_ID,
     DOCTOR_SCHEMA_ID,
@@ -19,12 +19,7 @@ const router = Router();
 
 router.get('/', guard(0), async (req: Request, res: Response) => {
     try {
-        const appointments = await Appointment.find()
-            .populate(TIMECELL_SCHEMA_ID)
-            .populate(DOCTOR_SCHEMA_ID)
-            .populate(APPOINTMENT_SCHEMA_ID)
-            .lean()
-            .exec();
+        const appointments = await Appointment.find().populate(TIMECELL_SCHEMA_ID).lean().exec();
         res.json(appointments);
     } catch (error) {
         res.sendStatus(500).send(error);
@@ -35,14 +30,29 @@ router.get('/:id', guard(0), async (req: Request, res: Response) => {
     try {
         const appointment = await Appointment.findById(req.params.id)
             .populate(TIMECELL_SCHEMA_ID)
-            .populate(DOCTOR_SCHEMA_ID)
-            .populate(APPOINTMENT_SCHEMA_ID)
             .lean()
             .exec();
         if (!appointment) {
             res.status(404).send(Messages.NOT_FOUND);
         } else {
             res.json(appointment);
+        }
+    } catch (error) {
+        res.sendStatus(500).send(error);
+    }
+});
+
+router.get('/:doctorid', guard(0), async (req: Request, res: Response) => {
+    try {
+        const appointment = await Appointment.find().populate(TIMECELL_SCHEMA_ID).lean().exec();
+        if (!appointment) {
+            res.status(404).send(Messages.NOT_FOUND);
+        } else {
+            res.json(
+                appointment.filter(
+                    (a: IAppointment) => String(a.timecell.doctor._id) === req.params.doctorid
+                )
+            );
         }
     } catch (error) {
         res.sendStatus(500).send(error);
