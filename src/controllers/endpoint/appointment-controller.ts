@@ -44,7 +44,7 @@ router.get('/:id', guard(0), async (req: Request, res: Response) => {
 
 router.get('/doctor/:doctorid', guard(0), async (req: Request, res: Response) => {
     try {
-        const appointment = await Appointment.find().populate(TIMECELL_SCHEMA_ID).lean().exec();
+        const appointment = await Appointment.find({}).populate(TIMECELL_SCHEMA_ID).lean().exec();
         if (!appointment) {
             res.status(404).send(Messages.NOT_FOUND);
         } else {
