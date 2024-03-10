@@ -20,8 +20,17 @@ const router = Router();
 // 3 DELETE /:id
 
 router.get('/', guard(0), async (req: Request, res: Response) => {
+    const filter = {
+        date: {
+            $gte: req.query.start,
+            $lte: req.query.end
+        },
+        customer: req.query.customerid,
+        doctor: req.query.doctorid
+    };
+    console.log('FILTER:', filter);
     try {
-        const timecells = await TimeCell.find()
+        const timecells = await TimeCell.find(filter)
             .populate(DOCTOR_SCHEMA_ID)
             .populate(CUSTOMER_SCHEMA_ID)
             .lean()

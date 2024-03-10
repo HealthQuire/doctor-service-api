@@ -94,7 +94,6 @@ router.post('/create', guard(0), async (req: Request, res: Response) => {
         await doctor.save();
         res.json(doctor);
     } catch (error) {
-        console.error(error);
         res.status(500).send(error);
     }
 });

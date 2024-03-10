@@ -21,7 +21,6 @@ const createUser = async (userData: IUserData) => {
         avatarUrl: userData.avatarUrl,
         status: 'active'
     });
-    console.log(userServiceHook);
 
     if (userServiceHook.status !== 200) {
         throw new Error('User service error');
