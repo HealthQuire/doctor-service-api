@@ -103,7 +103,7 @@ router.patch('/:id', guard(0), async (req: Request, res: Response) => {
     }
 });
 
-router.delete('/', guard(0), async (req: Request, res: Response) => {
+router.delete('/:id', guard(0), async (req: Request, res: Response) => {
     try {
         const appointment = await Appointment.findByIdAndDelete(req.params.id).lean().exec();
         if (!appointment) {

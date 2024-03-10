@@ -105,7 +105,7 @@ router.patch('/:id', guard(0), async (req: Request, res: Response) => {
     }
 });
 
-router.delete('/', guard(0), async (req: Request, res: Response) => {
+router.delete('/:id', guard(0), async (req: Request, res: Response) => {
     try {
         const customer = await Customer.findByIdAndDelete(req.params.id).lean().exec();
         if (!customer) {

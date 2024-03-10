@@ -11,6 +11,14 @@ import Doctor from '../../database/schemas/doctor/doctor-schema';
 
 const router = Router();
 
+// 1 GET /
+// 1 GET /:id
+// 2 GET today/:doctorid
+// 2 GET currentweek/:doctorid
+// 3 POST /
+// 3 PATCH /:id
+// 3 DELETE /:id
+
 router.get('/', guard(0), async (req: Request, res: Response) => {
     try {
         const timecells = await TimeCell.find()
@@ -98,7 +106,7 @@ router.post('/', guard(0), async (req: Request, res: Response) => {
     }
 });
 
-router.patch('/', guard(0), async (req: Request, res: Response) => {
+router.patch('/:id', guard(0), async (req: Request, res: Response) => {
     try {
         const timecell = await TimeCell.findByIdAndUpdate(req.params.id, req.body, { new: true })
             .lean()
@@ -113,7 +121,7 @@ router.patch('/', guard(0), async (req: Request, res: Response) => {
     }
 });
 
-router.delete('/', guard(0), async (req: Request, res: Response) => {
+router.delete('/:id', guard(0), async (req: Request, res: Response) => {
     try {
         const timecell = await TimeCell.findByIdAndDelete(req.params.id).lean().exec();
         if (!timecell) {
