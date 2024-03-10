@@ -7,6 +7,7 @@ import { Request, Response, Router } from 'express';
 import TimeCell from '../../database/schemas/timecell/timecell-schema';
 import Messages from '../../static-data/messages';
 import { CUSTOMER_SCHEMA_ID, DOCTOR_SCHEMA_ID } from '../../database/schemas/names';
+import Doctor from '../../database/schemas/doctor/doctor-schema';
 
 const router = Router();
 
@@ -42,7 +43,9 @@ router.get('/:id', guard(0), async (req: Request, res: Response) => {
 
 router.get('/today/:doctorid', guard(0), async (req: Request, res: Response) => {
     try {
-        const timecells = await TimeCell.find({ doctor: req.params.doctorid, date: new Date() })
+        const doctor = await Doctor.findById(req.params.doctorid);
+
+        const timecells = await TimeCell.find({ doctor: doctor, date: new Date() })
             .populate(DOCTOR_SCHEMA_ID)
             .populate(CUSTOMER_SCHEMA_ID)
             .lean()
@@ -61,8 +64,10 @@ router.post('/currentweek/:doctorid', guard(0), async (req: Request, res: Respon
     });
 
     try {
+        const doctor = await Doctor.findById(req.params.doctorid);
+
         const timecells = await TimeCell.find({
-            doctor: req.params.doctorid,
+            doctor: doctor,
             date: { $in: nextSevenDays }
         })
             .populate(DOCTOR_SCHEMA_ID)
