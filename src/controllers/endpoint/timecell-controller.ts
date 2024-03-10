@@ -94,7 +94,7 @@ router.get('/currentweek/:doctorid', guard(0), async (req: Request, res: Respons
         return date;
     });
 
-    console.log(nextSevenDays);
+    console.log('DAYS: ', nextSevenDays);
 
     try {
         const timecells = await TimeCell.find({
