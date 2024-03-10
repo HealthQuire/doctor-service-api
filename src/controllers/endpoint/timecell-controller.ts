@@ -22,11 +22,11 @@ const router = Router();
 router.get('/', guard(0), async (req: Request, res: Response) => {
     const filter = {
         date: {
-            $gte: req.query.start,
-            $lte: req.query.end
+            ...(req.query.start ? { $gte: req.query.start } : {}),
+            ...(req.query.end ? { $lte: req.query.end } : {})
         },
-        customer: req.query.customerid,
-        doctor: req.query.doctorid
+        ...(req.query.customerid ? { customer: req.query.customerid } : {}),
+        ...(req.query.doctorid ? { doctor: req.query.doctorid } : {})
     };
     console.log('FILTER:', filter);
     try {
