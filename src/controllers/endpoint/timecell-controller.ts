@@ -103,10 +103,15 @@ router.get('/currentweek/:doctorid', guard(0), async (req: Request, res: Respons
             .lean()
             .exec();
         console.log(timecells);
+        console.log(
+            'FILTERED:',
+            timecells.filter((item) => item.date == new Date('2024-03-14T00:00:00.000Z'))
+        );
+
         res.json(
             timecells.filter(
                 (timecell) =>
-                    String(timecell.doctor._id) === req.params.doctorid &&
+                    String(timecell.doctor._id) == req.params.doctorid &&
                     nextSevenDays.includes(new Date(timecell.date))
             )
         );
