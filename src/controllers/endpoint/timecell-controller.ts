@@ -84,14 +84,14 @@ router.get('/today/:doctorid', guard(0), async (req: Request, res: Response) => 
 });
 
 router.get('/currentweek/:doctorid', guard(0), async (req: Request, res: Response) => {
-    const nextSevenDays: Array<Date> = new Array(7).fill(null).map((_, i) => {
+    const nextSevenDays: Array<string> = new Array(7).fill(null).map((_, i) => {
         const date = new Date();
         date.setSeconds(0);
         date.setHours(0);
         date.setMinutes(0);
         date.setMilliseconds(0);
         date.setDate(date.getDate() + i);
-        return date;
+        return String(date);
     });
 
     console.log('DAYS: ', nextSevenDays);
@@ -102,7 +102,7 @@ router.get('/currentweek/:doctorid', guard(0), async (req: Request, res: Respons
             .populate(CUSTOMER_SCHEMA_ID)
             .lean()
             .exec();
-        console.log(timecells);
+        // console.log(timecells);
         console.log(
             'FILTERED:',
             timecells.filter((item) => {
@@ -110,7 +110,7 @@ router.get('/currentweek/:doctorid', guard(0), async (req: Request, res: Respons
                     item.date,
                     '-',
                     new Date('2024-03-14T00:00:00.000Z'),
-                    item.date == new Date('2024-03-14T00:00:00.000Z')
+                    String(item.date) == String(new Date('2024-03-14T00:00:00.000Z'))
                 );
                 return item.date == new Date('2024-03-14T00:00:00.000Z');
             })
@@ -123,7 +123,7 @@ router.get('/currentweek/:doctorid', guard(0), async (req: Request, res: Respons
             timecells.filter(
                 (timecell) =>
                     String(timecell.doctor._id) == req.params.doctorid &&
-                    nextSevenDays.includes(new Date(timecell.date))
+                    nextSevenDays.includes(String(new Date(timecell.date)))
             )
         );
     } catch (error) {
