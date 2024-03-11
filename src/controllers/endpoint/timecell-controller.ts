@@ -102,9 +102,13 @@ router.get('/currentweek/:doctorid', guard(0), async (req: Request, res: Respons
             .populate(CUSTOMER_SCHEMA_ID)
             .lean()
             .exec();
-        console.log(timecells)
+        console.log(timecells);
         res.json(
-            timecells.filter((timecell) => (String(timecell.doctor._id) === req.params.doctorid) && nextSevenDays.includes(timecell.date)
+            timecells.filter(
+                (timecell) =>
+                    String(timecell.doctor._id) === req.params.doctorid &&
+                    nextSevenDays.includes(timecell.date)
+            )
         );
     } catch (error) {
         res.status(500).send(error);
