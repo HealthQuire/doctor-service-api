@@ -107,7 +107,7 @@ router.get('/currentweek/:doctorid', guard(0), async (req: Request, res: Respons
             timecells.filter(
                 (timecell) =>
                     String(timecell.doctor._id) === req.params.doctorid &&
-                    nextSevenDays.includes(timecell.date)
+                    nextSevenDays.includes(new Date(timecell.date))
             )
         );
     } catch (error) {
